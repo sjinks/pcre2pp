@@ -1,0 +1,8 @@
+/.build
+/.lib
+/.settings
+/coverage
+.project
+.cproject
+.tracefile
+*.gcno
