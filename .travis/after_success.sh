@@ -1,8 +1,10 @@
 #!/bin/bash
 
+set -x
+
 PREFIX=$(readlink -enq "$(dirname $0)/../")
 
-if [ "$CXX" = "g++" ]; then
+if [ "$CXX" = "g++-6" ]; then
 	GCOV=gcov
 	ARGS="-s \"$PREFIX\" -ablpr"
 else
