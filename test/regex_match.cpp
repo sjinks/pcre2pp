@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include <regex>
 #include <string>
-#include <iostream>
 #include "pcre2++/pcre2pp.h"
 
 TEST(RegexMatch, no_match)
