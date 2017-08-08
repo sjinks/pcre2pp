@@ -4,6 +4,7 @@
 #include <regex>
 #include <string>
 #include "pcre2++/pcre2pp.h"
+#include "pcre2++/private/table_map.h"
 
 TEST(RegexMatch, no_match)
 {
@@ -180,5 +181,16 @@ TEST(regex_match, collate)
 
     EXPECT_TRUE(pcre2::regex_match(target8, r8));
     EXPECT_TRUE(pcre2::regex_match(target16, r16));
+    EXPECT_TRUE(pcre2::regex_match(target32, r32));
+
+    // Test x16 and x32 table generation
+    auto& tm = pcre2::details::table_map::instance();
+
+    tm.remove(fr.name());
+    r16.assign(pattern16, flags);
+    EXPECT_TRUE(pcre2::regex_match(target16, r16));
+
+    tm.remove(fr.name());
+    r32.assign(pattern32, flags);
     EXPECT_TRUE(pcre2::regex_match(target32, r32));
 }

@@ -45,6 +45,15 @@ public:
         }
     }
 
+    void remove(const std::string& key)
+    {
+        map_t::iterator it = this->m_map.find(key);
+        if (it != this->m_map.end()) {
+            std::free(it->second);
+            this->m_map.erase(it);
+        }
+    }
+
 private:
     using map_t = std::map<std::string, std::uint8_t*>;
     map_t m_map;
