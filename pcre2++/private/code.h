@@ -31,8 +31,7 @@ union code {
             return;
         }
 
-        CharT buf[150];
-        std::string error = get_error_message(error_code, buf, 150);
+        std::string error = code2error<CharT>(error_code);
         throw regex_error(error_code, error);
     }
 

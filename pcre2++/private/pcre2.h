@@ -100,6 +100,14 @@ static inline std::string get_error_message(int code, char32_t* buf, std::size_t
     return conv.to_bytes(err);
 }
 
+template<typename CharT>
+std::string code2error(int code)
+{
+    CharT buf[256];
+    return get_error_message(code, buf, 256);
+}
+
+
 static inline pcre2_match_data_8* match_data_create_from_pattern(const pcre2_code_8* re)
 {
     return pcre2_match_data_create_from_pattern_8(re, nullptr);
