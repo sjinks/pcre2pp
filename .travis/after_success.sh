@@ -4,7 +4,7 @@ PREFIX=$(readlink -enq "$(dirname $0)/../")
 
 if [ "$CXX" = "g++-6" ]; then
 	GCOV=gcov-6
-	ARGS="-ablpr"
+	ARGS="-ablp"
 else
 	exit 0
 fi
