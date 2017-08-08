@@ -3,8 +3,8 @@
 
 #include <new>
 
-#include "../../pcre2++/private/character_table.h"
-#include "../../pcre2++/private/pcre2.h"
+#include "pcre2++/private/character_table.h"
+#include "pcre2++/private/pcre2.h"
 
 namespace pcre2 {
 
@@ -17,26 +17,35 @@ union compile_context {
     {
     }
 
-    ~compile_context();
+    ~compile_context()
+    {
+        compile_context_free(this->get<CharT>());
+    }
 
     void create();
 
-    operator pcre2_compile_context_8*() const
+    template<typename C = CharT, typename std::enable_if<sizeof(C) == 1>::type* = nullptr>
+    pcre2_compile_context_8* get() const
     {
         return this->c8;
     }
 
-    operator pcre2_compile_context_16*() const
+    template<typename C = CharT, typename std::enable_if<sizeof(C) == 2>::type* = nullptr>
+    pcre2_compile_context_16* get() const
     {
         return this->c16;
     }
 
-    operator pcre2_compile_context_32*() const
+    template<typename C = CharT, typename std::enable_if<sizeof(C) == 4>::type* = nullptr>
+    pcre2_compile_context_32* get() const
     {
         return this->c32;
     }
 
-    void set_character_table(const pcre2::details::character_table<CharT>& tbl);
+    void set_character_table(const pcre2::details::character_table<CharT>& tbl)
+    {
+        set_character_tables(this->get<CharT>(), tbl);
+    }
 
 private:
     pcre2_compile_context_8* c8;
@@ -77,50 +86,7 @@ inline void compile_context<char32_t>::create()
     }
 }
 
-template<>
-inline compile_context<char>::~compile_context()
-{
-    if (this->c8) {
-        pcre2_compile_context_free_8(this->c8);
-    }
 }
-
-template<>
-inline compile_context<char16_t>::~compile_context()
-{
-    if (this->c16) {
-        pcre2_compile_context_free_16(this->c16);
-    }
-}
-
-template<>
-inline compile_context<char32_t>::~compile_context()
-{
-    if (this->c32) {
-        pcre2_compile_context_free_32(this->c32);
-    }
-}
-
-template<>
-inline void compile_context<char>::set_character_table(const pcre2::details::character_table<char>& tbl)
-{
-    set_character_tables(this->c8, tbl);
-}
-
-template<>
-inline void compile_context<char16_t>::set_character_table(const pcre2::details::character_table<char16_t>& tbl)
-{
-    set_character_tables(this->c16, tbl);
-}
-
-template<>
-inline void compile_context<char32_t>::set_character_table(const pcre2::details::character_table<char32_t>& tbl)
-{
-    set_character_tables(this->c32, tbl);
-}
-
-}
-
 }
 
 #endif // PCRE2XX_PRIVATE_COMPILE_CONTEXT_H
