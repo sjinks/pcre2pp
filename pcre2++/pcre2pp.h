@@ -6,6 +6,7 @@
 #include "regex_constants.h"
 #include "regex_error.h"
 #include "regex_match.h"
+#include "regex_search.h"
 #include "sub_match.h"
 
 #endif // PCRE2XX_REGEX_H

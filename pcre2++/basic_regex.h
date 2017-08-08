@@ -19,6 +19,9 @@ class basic_regex;
 namespace details {
 template<typename BiIt, typename C, typename RT>
 inline std::pair<int, std::size_t*> do_regex_match(BiIt, BiIt, const pcre2::basic_regex<C, RT>&, std::uint32_t);
+
+template<typename BiIt, typename C, typename RT>
+inline std::pair<int, std::size_t*> do_regex_search(BiIt, BiIt, const pcre2::basic_regex<C, RT>&, std::uint32_t);
 }
 
 template<typename CharT, typename Traits = std::regex_traits<CharT> >
@@ -188,6 +191,9 @@ private:
 
     template<typename BiIt, typename C, typename RT>
     friend std::pair<int, std::size_t*> pcre2::details::do_regex_match(BiIt s, BiIt e, const basic_regex<C, RT>& re, std::uint32_t flags);
+
+    template<typename BiIt, typename C, typename RT>
+    friend std::pair<int, std::size_t*> pcre2::details::do_regex_search(BiIt s, BiIt e, const basic_regex<C, RT>& re, std::uint32_t flags);
 };
 
 using regex   = basic_regex<char>;
