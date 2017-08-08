@@ -72,6 +72,4 @@ private:
 }
 }
 
-
-
 #endif // PCRE2PP_PRIVATE_TABLE_MAP_H

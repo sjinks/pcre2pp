@@ -3,7 +3,7 @@
 
 #include <new>
 
-#include "pcre2++/private/pcre2.h"
+#include "private/pcre2.h"
 
 namespace pcre2 {
 namespace details {

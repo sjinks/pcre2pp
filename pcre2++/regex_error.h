@@ -4,8 +4,8 @@
 #include <stdexcept>
 #include <string>
 
-#include "../pcre2++/private/pcre2.h"
-#include "../pcre2++/regex_constants.h"
+#include "private/pcre2.h"
+#include "regex_constants.h"
 
 namespace pcre2 {
 

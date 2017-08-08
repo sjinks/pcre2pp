@@ -2,7 +2,7 @@
 #include <locale>
 #include <regex>
 #include <string>
-#include "private/pcre2.h"
+#include "pcre2pp.h"
 
 TEST(BasicRegexTest, mark_count)
 {

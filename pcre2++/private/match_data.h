@@ -5,8 +5,8 @@
 #include <new>
 #include <type_traits>
 
-#include "../../pcre2++/private/code.h"
-#include "../../pcre2++/private/pcre2.h"
+#include "private/code.h"
+#include "private/pcre2.h"
 
 namespace pcre2 {
 namespace details {

@@ -3,10 +3,10 @@
 
 #include <string>
 
-#include "pcre2++/basic_regex.h"
-#include "pcre2++/regex_constants.h"
-#include "pcre2++/match_results.h"
-#include "pcre2++/private/do_regex_match.h"
+#include "basic_regex.h"
+#include "regex_constants.h"
+#include "match_results.h"
+#include "private/do_regex_match.h"
 
 namespace pcre2 {
 

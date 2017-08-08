@@ -1,10 +1,10 @@
 #ifndef PCRE2XX_PRIVATE_CODE_H
 #define PCRE2XX_PRIVATE_CODE_H
 
-#include "../../pcre2++/private/compile_context.h"
-#include "../../pcre2++/private/pcre2.h"
-#include "../../pcre2++/regex_constants.h"
-#include "../../pcre2++/regex_error.h"
+#include "private/compile_context.h"
+#include "private/pcre2.h"
+#include "regex_constants.h"
+#include "regex_error.h"
 
 namespace pcre2 {
 namespace details {

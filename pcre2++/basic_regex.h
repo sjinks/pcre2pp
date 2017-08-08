@@ -8,8 +8,8 @@
 #include <string>
 #include <type_traits>
 
-#include "../pcre2++/private/regex_private.h"
-#include "../pcre2++/regex_constants.h"
+#include "private/regex_private.h"
+#include "regex_constants.h"
 
 namespace pcre2 {
 

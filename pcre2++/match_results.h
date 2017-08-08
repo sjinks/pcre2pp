@@ -6,8 +6,8 @@
 #include <string>
 #include <vector>
 
-#include "../pcre2++/regex_constants.h"
-#include "../pcre2++/sub_match.h"
+#include "regex_constants.h"
+#include "sub_match.h"
 
 namespace pcre2 {
 
