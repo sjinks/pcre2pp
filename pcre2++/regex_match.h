@@ -13,10 +13,6 @@ namespace pcre2 {
 template<typename BiIter, typename Alloc, typename CharT, typename Traits>
 inline bool regex_match(BiIter s, BiIter e, match_results<BiIter, Alloc>& m, const basic_regex<CharT, Traits>& re, regex_constants::match_flag_type flags = regex_constants::match_default)
 {
-    sub_match<BiIter> unmatched;
-    unmatched.first  = e;
-    unmatched.second = e;
-
     std::pair<int, std::size_t*> mr = pcre2::details::do_regex_match(s, e, re, flags);
     m = pcre2::details::ovector_to_match<BiIter, Alloc>(mr, s, e);
     return mr.second != nullptr;
