@@ -9,4 +9,3 @@ sudo apt-get install libgtest-dev g++-6
 git clone --depth=1 --branch=ci-packages https://github.com/sjinks/pcre2pp.git packages
 sudo apt-get purge libpcre3-dev
 sudo dpkg -i packages/*.deb
-git checkout master
