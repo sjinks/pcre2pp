@@ -14,6 +14,10 @@ inline std::pair<int, std::size_t*> do_regex_match(BiIter s, BiIter e, const bas
     static const CharT rh[] = { CharT('\\'), CharT('A'), CharT('('), CharT('?'), CharT(':'), CharT('\0') };
     static const CharT rt[] = { CharT(')'), CharT('\\'), CharT('z'), CharT('\0') };
 
+    if (!re.d_ptr) {
+        return std::make_pair(0, nullptr);
+    }
+
     typename Traits::string_type regex = rh + re.d_ptr->regex() + rt;
 
     basic_regex<CharT, Traits> full;
@@ -23,10 +27,6 @@ inline std::pair<int, std::size_t*> do_regex_match(BiIter s, BiIter e, const bas
     regex_private<Traits>* rp          = full.d_ptr.get();
     match_data<CharT>& md              = rp->get_match_data();
     const details::code<CharT>& code   = rp->get_code();
-
-    if (!re.d_ptr) {
-        return std::make_pair(0, nullptr);
-    }
 
     int res = details::match(code.get(), const_cast<CharT*>(&(*s)), std::distance(s, e), 0, static_cast<uint32_t>(flags), md.get());
     if (res < 0) {
