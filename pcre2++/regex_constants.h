@@ -24,22 +24,22 @@ constexpr syntax_option_type utf        = static_cast<syntax_option_type>(PCRE2_
 
 constexpr inline syntax_option_type operator&(syntax_option_type a, syntax_option_type b)
 {
-    return static_cast<syntax_option_type>(static_cast<unsigned int>(a) & static_cast<unsigned int>(b));
+    return static_cast<syntax_option_type>(static_cast<std::uint64_t>(a) & static_cast<std::uint64_t>(b));
 }
 
 constexpr inline syntax_option_type operator|(syntax_option_type a, syntax_option_type b)
 {
-    return static_cast<syntax_option_type>(static_cast<unsigned int>(a) | static_cast<unsigned int>(b));
+    return static_cast<syntax_option_type>(static_cast<std::uint64_t>(a) | static_cast<std::uint64_t>(b));
 }
 
 constexpr inline syntax_option_type operator^(syntax_option_type a, syntax_option_type b)
 {
-    return static_cast<syntax_option_type>(static_cast<unsigned int>(a) ^ static_cast<unsigned int>(b));
+    return static_cast<syntax_option_type>(static_cast<std::uint64_t>(a) ^ static_cast<std::uint64_t>(b));
 }
 
 constexpr inline syntax_option_type operator~(syntax_option_type a)
 {
-    return static_cast<syntax_option_type>(~static_cast<unsigned int>(a));
+    return static_cast<syntax_option_type>(~static_cast<std::uint64_t>(a));
 }
 
 inline syntax_option_type& operator&=(syntax_option_type& a, syntax_option_type b)
