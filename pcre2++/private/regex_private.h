@@ -1,10 +1,11 @@
 #ifndef PCRE2XX_PRIVATE_REGEX_PRIVATE_H
 #define PCRE2XX_PRIVATE_REGEX_PRIVATE_H
 
-#include "../../pcre2++/private/code.h"
-#include "../../pcre2++/private/compile_context.h"
-#include "../../pcre2++/private/match_data.h"
-#include "../../pcre2++/private/pcre2.h"
+#include "pcre2++/private/code.h"
+#include "pcre2++/private/compile_context.h"
+#include "pcre2++/private/match_data.h"
+#include "pcre2++/private/pcre2.h"
+#include "pcre2++/private/table_map.h"
 
 namespace pcre2 {
 namespace details {
@@ -23,9 +24,15 @@ public:
     {
         if (f & pcre2::regex_constants::collate) {
             this->m_ctx.create();
-            char* orig = std::setlocale(LC_CTYPE, loc.name().c_str());
-            character_table<value_type> tbl;
-            std::setlocale(LC_CTYPE, orig);
+            table_map& tm = table_map::instance();
+            uint8_t* tbl  = tm.get(loc.name());
+            if (!tbl) {
+                char* orig = std::setlocale(LC_CTYPE, loc.name().c_str());
+                tbl        = maketables<value_type>();
+                std::setlocale(LC_CTYPE, orig);
+                tm.set(loc.name(), tbl);
+            }
+
             this->m_ctx.set_character_table(tbl);
         }
 

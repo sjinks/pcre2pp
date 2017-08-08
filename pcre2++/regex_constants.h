@@ -21,6 +21,7 @@ constexpr syntax_option_type optimize   = static_cast<syntax_option_type>(UINT64
 constexpr syntax_option_type collate    = static_cast<syntax_option_type>(UINT64_C(0x2000000000000000));
 constexpr syntax_option_type multiline  = static_cast<syntax_option_type>(PCRE2_MULTILINE);
 constexpr syntax_option_type utf        = static_cast<syntax_option_type>(PCRE2_UTF);
+constexpr syntax_option_type ucp        = static_cast<syntax_option_type>(PCRE2_UCP);
 
 constexpr inline syntax_option_type operator&(syntax_option_type a, syntax_option_type b)
 {

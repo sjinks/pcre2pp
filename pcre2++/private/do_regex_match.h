@@ -1,9 +1,9 @@
 #ifndef PRIVATE_DO_REGEX_MATCH_H_
 #define PRIVATE_DO_REGEX_MATCH_H_
 
-#include "../../pcre2++/basic_regex.h"
-#include "../../pcre2++/private/regex_private.h"
-#include "../../pcre2++/regex_error.h"
+#include "pcre2++/basic_regex.h"
+#include "pcre2++/private/regex_private.h"
+#include "pcre2++/regex_error.h"
 
 namespace pcre2 {
 namespace details {

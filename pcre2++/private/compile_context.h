@@ -3,11 +3,9 @@
 
 #include <new>
 
-#include "pcre2++/private/character_table.h"
 #include "pcre2++/private/pcre2.h"
 
 namespace pcre2 {
-
 namespace details {
 
 template<typename CharT>
@@ -42,7 +40,7 @@ union compile_context {
         return this->c32;
     }
 
-    void set_character_table(const pcre2::details::character_table<CharT>& tbl)
+    void set_character_table(const std::uint8_t* tbl)
     {
         set_character_tables(this->get<CharT>(), tbl);
     }

@@ -1,7 +1,10 @@
 #include <gtest/gtest.h>
+#include <iostream>
+#include <locale>
 #include <regex>
 #include <string>
 #include "pcre2++/pcre2pp.h"
+#include "pcre2++/private/table_map.h"
 
 TEST(RegexMatch, no_match)
 {
@@ -134,4 +137,60 @@ TEST(regex_match, exception)
     catch (const pcre2::regex_error& e) {
         EXPECT_EQ(pcre2::regex_constants::error_utf8_err1, e.code());
     }
+}
+
+TEST(regex_match, collate)
+{
+    pcre2::regex r8;
+    pcre2::regex16 r16;
+    pcre2::regex32 r32;
+    std::locale fr;
+
+    std::string pattern8("\\w+");
+    std::u16string pattern16(u"\\w+");
+    std::u32string pattern32(U"\\w+");
+    auto flags = pcre2::regex_constants::collate;
+
+    std::string target8("\xC9""cole");
+    std::u16string target16(u"\xC9""cole");
+    std::u32string target32(U"\xC9""cole");
+
+    r8.assign(pattern8,   flags);
+    r16.assign(pattern16, flags);
+    r32.assign(pattern32, flags);
+
+    EXPECT_FALSE(pcre2::regex_match(target8, r8));
+    EXPECT_FALSE(pcre2::regex_match(target16, r16));
+    EXPECT_FALSE(pcre2::regex_match(target32, r32));
+
+    try {
+        fr = std::locale("fr_FR.ISO-8859-1");
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << "[ SKIPPED  ] fr_FR.ISO-8859-1 locale is not available: " << e.what() << std::endl;
+        return;
+    }
+
+    r8.imbue(fr);
+    r16.imbue(fr);
+    r32.imbue(fr);
+
+    r8.assign(pattern8,   flags);
+    r16.assign(pattern16, flags);
+    r32.assign(pattern32, flags);
+
+    EXPECT_TRUE(pcre2::regex_match(target8, r8));
+    EXPECT_TRUE(pcre2::regex_match(target16, r16));
+    EXPECT_TRUE(pcre2::regex_match(target32, r32));
+
+    // Test x16 and x32 table generation
+    auto& tm = pcre2::details::table_map::instance();
+
+    tm.remove(fr.name());
+    r16.assign(pattern16, flags);
+    EXPECT_TRUE(pcre2::regex_match(target16, r16));
+
+    tm.remove(fr.name());
+    r32.assign(pattern32, flags);
+    EXPECT_TRUE(pcre2::regex_match(target32, r32));
 }
