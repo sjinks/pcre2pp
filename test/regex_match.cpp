@@ -123,6 +123,21 @@ TEST(RegexMatch, match)
     EXPECT_EQ(sm.position(0), mm.position(0));
     EXPECT_EQ(sm.position(1), mm.position(1));
     EXPECT_EQ(sm.position(2), mm.position(2));
+
+    {
+        std::string pattern("get|getvalue");
+        const char* target = "GetValue";
+        std::regex sr(pattern.begin(), pattern.end(), std::regex_constants::icase);
+        pcre2::regex mr(pattern.begin(), pattern.end(), pcre2::regex_constants::icase);
+        std::cmatch sm;
+        pcre2::cmatch mm;
+
+        match = std::regex_match(target, sm, sr);
+        ASSERT_TRUE(match);
+
+        match = pcre2::regex_match(target, mm, mr);
+        ASSERT_TRUE(match);
+    }
 }
 
 TEST(regex_match, exception)
@@ -151,9 +166,9 @@ TEST(regex_match, collate)
     std::u32string pattern32(U"\\w+");
     auto flags = pcre2::regex_constants::collate;
 
-    std::string target8("\xC9""cole");
-    std::u16string target16(u"\xC9""cole");
-    std::u32string target32(U"\xC9""cole");
+    const char* target8("\xC9""cole");
+    const char16_t* target16(u"\xC9""cole");
+    const char32_t* target32(U"\xC9""cole");
 
     r8.assign(pattern8,   flags);
     r16.assign(pattern16, flags);
