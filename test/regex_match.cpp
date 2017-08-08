@@ -209,3 +209,15 @@ TEST(regex_match, collate)
     r32.assign(pattern32, flags);
     EXPECT_TRUE(pcre2::regex_match(target32, r32));
 }
+
+TEST(RegexMatch, empty_regex)
+{
+    pcre2::regex re;
+    bool m;
+
+    m = pcre2::regex_match("", re);
+    EXPECT_FALSE(m);
+
+    m = pcre2::regex_match("anything", re);
+    EXPECT_FALSE(m);
+}
