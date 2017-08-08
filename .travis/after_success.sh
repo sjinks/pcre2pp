@@ -1,21 +1,12 @@
 #!/bin/bash
 
-set -x
-
 PREFIX=$(readlink -enq "$(dirname $0)/../")
 
 if [ "$CXX" = "g++-6" ]; then
-	GCOV=gcov
-	ARGS="-s \"$PREFIX\" -ablpr"
+	GCOV=gcov-6
+	ARGS="-ablpr"
 else
-	GCOV=llvm-cov
-	ARGS="gcov -a -b -l -p"
+	exit 0
 fi
 
-rm -rf   "$PREFIX/.gcov"
-mkdir -p "$PREFIX/.gcov"
-
-$GCOV $ARGS -o .build/test   test/*.cpp
-mv *.gcov "$PREFIX/.gcov"
-
-/bin/bash <(curl -s https://codecov.io/bash) -f "$PREFIX/.gcov/*.gcov" -X gcov
+/bin/bash <(curl -s https://codecov.io/bash) -x $GCOV -a $ARGS
