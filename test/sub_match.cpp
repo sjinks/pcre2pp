@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <string>
+#include <sstream>
 #include "pcre2++/pcre2pp.h"
 
 TEST(SubMatch, construct)
@@ -103,4 +104,13 @@ TEST(SubMatch, compare)
     EXPECT_FALSE('a' < match);
     EXPECT_TRUE('a' > match);
     EXPECT_TRUE('a' != match);
+}
+
+TEST(SubMatch, stream)
+{
+    std::stringstream stream;
+    pcre2::csub_match match;
+
+    stream << match;
+    EXPECT_EQ(std::string(), stream.str());
 }
