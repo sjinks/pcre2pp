@@ -27,6 +27,27 @@ static inline void compile_context_free(pcre2_compile_context_32* ctx)
     pcre2_compile_context_free_32(ctx);
 }
 
+template<typename CharT>
+std::uint8_t* maketables();
+
+template<>
+inline std::uint8_t* maketables<char>()
+{
+    return const_cast<std::uint8_t*>(pcre2_maketables_8(nullptr));
+}
+
+template<>
+inline std::uint8_t* maketables<char16_t>()
+{
+    return const_cast<std::uint8_t*>(pcre2_maketables_16(nullptr));
+}
+
+template<>
+inline std::uint8_t* maketables<char32_t>()
+{
+    return const_cast<std::uint8_t*>(pcre2_maketables_32(nullptr));
+}
+
 static inline void set_character_tables(pcre2_compile_context_8* ctx, const std::uint8_t* tbl)
 {
     pcre2_set_character_tables_8(ctx, tbl);
@@ -101,7 +122,7 @@ static inline std::string get_error_message(int code, char32_t* buf, std::size_t
 }
 
 template<typename CharT>
-std::string code2error(int code)
+static inline std::string code2error(int code)
 {
     CharT buf[256];
     return get_error_message(code, buf, 256);
