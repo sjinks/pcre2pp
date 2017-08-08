@@ -34,8 +34,7 @@ inline std::pair<int, std::size_t*> do_regex_match(BiIter s, BiIter e, const bas
             return std::make_pair(0, nullptr);
         }
 
-        CharT buf[150];
-        std::string error = details::get_error_message(res, buf, 150);
+        std::string error = details::code2error<CharT>(res);
         throw regex_error(res, error);
     }
 

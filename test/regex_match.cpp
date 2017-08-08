@@ -121,3 +121,17 @@ TEST(RegexMatch, match)
     EXPECT_EQ(sm.position(1), mm.position(1));
     EXPECT_EQ(sm.position(2), mm.position(2));
 }
+
+TEST(regex_match, exception)
+{
+    pcre2::regex re("\\w+", pcre2::regex_constants::utf);
+    std::string pattern("\xC0");
+    ASSERT_THROW(pcre2::regex_match(pattern, re), pcre2::regex_error);
+
+    try {
+        pcre2::regex_match(pattern, re);
+    }
+    catch (const pcre2::regex_error& e) {
+        EXPECT_EQ(pcre2::regex_constants::error_utf8_err1, e.code());
+    }
+}
