@@ -1,5 +1,5 @@
-#ifndef PRIVATE_DO_REGEX_MATCH_H_
-#define PRIVATE_DO_REGEX_MATCH_H_
+#ifndef PCRE2PP_PRIVATE_DO_REGEX_MATCH_H
+#define PCRE2PP_PRIVATE_DO_REGEX_MATCH_H
 
 #include "basic_regex.h"
 #include "regex_error.h"
@@ -24,9 +24,19 @@ inline std::pair<int, std::size_t*> do_regex_match(BiIter s, BiIter e, const bas
     full.imbue(re.getloc());
     full.assign(regex, re.flags());
 
-    regex_private<Traits>* rp          = full.d_ptr.get();
-    match_data<CharT>& md              = rp->get_match_data();
-    const details::code<CharT>& code   = rp->get_code();
+    return do_regex_search(s, e, full, flags);
+}
+
+template<typename BiIter, typename CharT, typename Traits>
+inline std::pair<int, std::size_t*> do_regex_search(BiIter s, BiIter e, const basic_regex<CharT, Traits>& re, std::uint32_t flags)
+{
+    if (!re.d_ptr) {
+        return std::make_pair(0, nullptr);
+    }
+
+    regex_private<Traits>* rp        = re.d_ptr.get();
+    match_data<CharT>& md            = rp->get_match_data();
+    const details::code<CharT>& code = rp->get_code();
 
     int res = details::match(code.get(), const_cast<CharT*>(&(*s)), std::distance(s, e), 0, static_cast<uint32_t>(flags), md.get());
     if (res < 0) {
@@ -90,8 +100,8 @@ inline match_results<BiIter, Alloc> ovector_to_match(const std::pair<int, std::s
     sub_match<BiIter> suffix;
     prefix.first   = s;
     prefix.second  = s + ovector[0];
-    result.push_back(prefix);
     prefix.matched = (prefix.first != prefix.second);
+    result.push_back(prefix);
     suffix.first   = s + ovector[2*(cnt-1)+1];
     suffix.second  = e;
     suffix.matched = (suffix.first != suffix.second);
@@ -102,4 +112,4 @@ inline match_results<BiIter, Alloc> ovector_to_match(const std::pair<int, std::s
 }
 }
 
-#endif /* PRIVATE_DO_REGEX_MATCH_H_ */
+#endif // PCRE2PP_PRIVATE_DO_REGEX_MATCH_H
