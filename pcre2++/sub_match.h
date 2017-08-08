@@ -120,28 +120,28 @@ template<typename BiIter, typename CT, typename CA>
 inline bool operator<(const sub_match_string<BiIter, CT, CA>& lhs, const sub_match<BiIter>& rhs)
 {
     using string_type = typename sub_match<BiIter>::string_type;
-    return rhs.compare(string_type(lhs.data(), lhs.size())) < 0;
+    return 0 < rhs.compare(string_type(lhs.data(), lhs.size()));
 }
 
 template<typename BiIter, typename CT, typename CA>
 inline bool operator<=(const sub_match_string<BiIter, CT, CA>& lhs, const sub_match<BiIter>& rhs)
 {
     using string_type = typename sub_match<BiIter>::string_type;
-    return rhs.compare(string_type(lhs.data(), lhs.size())) <= 0;
+    return 0 <= rhs.compare(string_type(lhs.data(), lhs.size()));
 }
 
 template<typename BiIter, typename CT, typename CA>
 inline bool operator>=(const sub_match_string<BiIter, CT, CA>& lhs, const sub_match<BiIter>& rhs)
 {
     using string_type = typename sub_match<BiIter>::string_type;
-    return rhs.compare(string_type(lhs.data(), lhs.size())) >= 0;
+    return 0 >= rhs.compare(string_type(lhs.data(), lhs.size()));
 }
 
 template<typename BiIter, typename CT, typename CA>
 inline bool operator>(const sub_match_string<BiIter, CT, CA>& lhs, const sub_match<BiIter>& rhs)
 {
     using string_type = typename sub_match<BiIter>::string_type;
-    return rhs.compare(string_type(lhs.data(), lhs.size())) > 0;
+    return 0 > rhs.compare(string_type(lhs.data(), lhs.size()));
 }
 
 
@@ -205,25 +205,25 @@ inline bool operator!=(typename std::iterator_traits<BiIter>::value_type const* 
 template<typename BiIter>
 inline bool operator<(typename std::iterator_traits<BiIter>::value_type const* lhs, const sub_match<BiIter>& rhs)
 {
-    return rhs.compare(lhs) < 0;
+    return 0 < rhs.compare(lhs);
 }
 
 template<typename BiIter>
 inline bool operator<=(typename std::iterator_traits<BiIter>::value_type const* lhs, const sub_match<BiIter>& rhs)
 {
-    return rhs.compare(lhs) <= 0;
+    return 0 <= rhs.compare(lhs);
 }
 
 template<typename BiIter>
 inline bool operator>=(typename std::iterator_traits<BiIter>::value_type const* lhs, const sub_match<BiIter>& rhs)
 {
-    return rhs.compare(lhs) >= 0;
+    return 0 >= rhs.compare(lhs);
 }
 
 template<typename BiIter>
 inline bool operator>(typename std::iterator_traits<BiIter>::value_type const* lhs, const sub_match<BiIter>& rhs)
 {
-    return rhs.compare(lhs) > 0;
+    return 0 > rhs.compare(lhs);
 }
 
 
@@ -285,28 +285,28 @@ template<typename BiIter>
 inline bool operator<(typename std::iterator_traits<BiIter>::value_type const& lhs, const sub_match<BiIter> rhs)
 {
     using string_type = typename sub_match<BiIter>::string_type;
-    return rhs.compare(string_type(1, lhs)) < 0;
+    return 0 < rhs.compare(string_type(1, lhs));
 }
 
 template<typename BiIter>
 inline bool operator<=(typename std::iterator_traits<BiIter>::value_type const& lhs, const sub_match<BiIter> rhs)
 {
     using string_type = typename sub_match<BiIter>::string_type;
-    return rhs.compare(string_type(1, lhs)) <= 0;
+    return 0 <= rhs.compare(string_type(1, lhs));
 }
 
 template<typename BiIter>
 inline bool operator>=(typename std::iterator_traits<BiIter>::value_type const& lhs, const sub_match<BiIter> rhs)
 {
     using string_type = typename sub_match<BiIter>::string_type;
-    return rhs.compare(string_type(1, lhs)) >= 0;
+    return 0 >= rhs.compare(string_type(1, lhs));
 }
 
 template<typename BiIter>
 inline bool operator>(typename std::iterator_traits<BiIter>::value_type const& lhs, const sub_match<BiIter> rhs)
 {
     using string_type = typename sub_match<BiIter>::string_type;
-    return rhs.compare(string_type(1, lhs)) > 0;
+    return 0 > rhs.compare(string_type(1, lhs));
 }
 
 
