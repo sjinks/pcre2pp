@@ -15,6 +15,11 @@ template<typename T> union code;
 
 class regex_error : public std::runtime_error {
 public:
+    regex_error(regex_constants::error_type ecode)
+        : std::runtime_error(std::string()), m_code(ecode)
+    {
+    }
+
     virtual ~regex_error() throw() override
     {
     }
