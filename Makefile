@@ -6,7 +6,7 @@ LDFLAGS_EXTRA       = -pthread
 
 TESTER              = .lib/pcre2++-test
 
-TESTER_CPPFLAGS     = -I$(SRCDIR) -DPHPCXX_DEBUG
+TESTER_CPPFLAGS     = -I$(SRCDIR)
 TESTER_CPPFLAGS_PCH = -include .build/test/precompiled.h -Winvalid-pch
 TESTER_LDFLAGS      =
 TESTER_LDLIBS       = -lpcre2-8 -lpcre2-16 -lpcre2-32
