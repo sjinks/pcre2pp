@@ -22,7 +22,7 @@ union code {
     {
         int error_code;
         PCRE2_SIZE error_offset;
-        auto res = pcre2::details::compile(const_cast<CharT*>(re), len, f, error_code, error_offset, ctx);
+        auto res = pcre2::details::compile(const_cast<CharT*>(re), len, f, error_code, error_offset, ctx.get());
         if (res != nullptr) {
             // Not the best code
             // It relies upon the fact that all pointers are of the same size
