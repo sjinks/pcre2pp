@@ -3,15 +3,31 @@
 
 #include <string>
 
-#include "../pcre2++/regex_constants.h"
+#include "pcre2++/basic_regex.h"
+#include "pcre2++/regex_constants.h"
+#include "pcre2++/match_results.h"
+#include "pcre2++/private/do_regex_match.h"
 
 namespace pcre2 {
 
 template<typename BiIter, typename Alloc, typename CharT, typename Traits>
-inline bool regex_match(BiIter s, BiIter e, match_results<BiIter, Alloc>& m, const basic_regex<CharT, Traits>& re, regex_constants::match_flag_type flags = regex_constants::match_default);
+inline bool regex_match(BiIter s, BiIter e, match_results<BiIter, Alloc>& m, const basic_regex<CharT, Traits>& re, regex_constants::match_flag_type flags = regex_constants::match_default)
+{
+    sub_match<BiIter> unmatched;
+    unmatched.first  = e;
+    unmatched.second = e;
+
+    std::pair<int, std::size_t*> mr = pcre2::details::do_regex_match(s, e, re, flags);
+    m = pcre2::details::ovector_to_match<BiIter, Alloc>(mr, s, e);
+    return mr.second != nullptr;
+}
 
 template<typename BiIter, typename CharT, typename Traits>
-inline bool regex_match(BiIter s, BiIter e, const basic_regex<CharT, Traits>& re, regex_constants::match_flag_type flags = regex_constants::match_default);
+inline bool regex_match(BiIter s, BiIter e, const basic_regex<CharT, Traits>& re, regex_constants::match_flag_type flags = regex_constants::match_default)
+{
+    match_results<BiIter> tmp;
+    return regex_match(s, e, tmp, re, flags);
+}
 
 template<typename CharT, typename Alloc, typename Traits>
 inline bool regex_match(const CharT* s, match_results<const CharT*, Alloc>& m, const basic_regex<CharT, Traits>& re, regex_constants::match_flag_type f = regex_constants::match_default)
@@ -52,7 +68,5 @@ inline bool regex_match(
 }
 
 }
-
-#include "../pcre2++/private/regex_match.tcc"
 
 #endif // PCRE2XX_REGEX_MATCH_H
