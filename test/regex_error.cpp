@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <iostream>
 #include "pcre2++/pcre2pp.h"
 
 TEST(RegexError, basic)
