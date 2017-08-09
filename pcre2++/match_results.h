@@ -59,7 +59,7 @@ public:
 
     size_type size() const
     {
-        return base_type::size() - 3;
+        return base_type::empty() ? 0 : base_type::size() - 3;
     }
 
     size_type max_size() const
@@ -173,6 +173,11 @@ private:
         return base_type::operator[](base_type::size() - 2);
     }
 
+    value_type& get_prefix()
+    {
+        return base_type::operator[](base_type::size() - 2);
+    }
+
     const_reference get_suffix() const
     {
         return base_type::operator[](base_type::size() - 1);
@@ -180,6 +185,9 @@ private:
 
     template<typename BiIter2, typename Alloc2>
     friend match_results<BiIter2, Alloc2> pcre2::details::ovector_to_match(const std::pair<int, std::size_t*>& ov, BiIter2 s, BiIter2 e);
+
+    template<typename, typename, typename>
+    friend class regex_iterator;
 };
 
 using cmatch   = match_results<const char*>;
