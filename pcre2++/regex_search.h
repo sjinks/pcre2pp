@@ -1,5 +1,5 @@
-#ifndef PCRE2PP_REGEX_SEARCH_H
-#define PCRE2PP_REGEX_SEARCH_H
+#ifndef PCRE2XX_REGEX_SEARCH_H
+#define PCRE2XX_REGEX_SEARCH_H
 
 #include <string>
 
@@ -88,4 +88,4 @@ bool regex_search(
 	
 }
 
-#endif // PCRE2PP_REGEX_SEARCH_H
+#endif // PCRE2XX_REGEX_SEARCH_H

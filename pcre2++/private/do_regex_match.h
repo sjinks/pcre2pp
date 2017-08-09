@@ -1,5 +1,5 @@
-#ifndef PCRE2PP_PRIVATE_DO_REGEX_MATCH_H
-#define PCRE2PP_PRIVATE_DO_REGEX_MATCH_H
+#ifndef PCRE2XX_PRIVATE_DO_REGEX_MATCH_H
+#define PCRE2XX_PRIVATE_DO_REGEX_MATCH_H
 
 #include "basic_regex.h"
 #include "regex_error.h"
@@ -112,4 +112,4 @@ inline match_results<BiIter, Alloc> ovector_to_match(const std::pair<int, std::s
 }
 }
 
-#endif // PCRE2PP_PRIVATE_DO_REGEX_MATCH_H
+#endif // PCRE2XX_PRIVATE_DO_REGEX_MATCH_H

@@ -1,5 +1,5 @@
-#ifndef PCRE2PP_PRIVATE_TABLE_MAP_H
-#define PCRE2PP_PRIVATE_TABLE_MAP_H
+#ifndef PCRE2XX_PRIVATE_TABLE_MAP_H
+#define PCRE2XX_PRIVATE_TABLE_MAP_H
 
 #include <cstdint>
 #include <cstdlib>
@@ -72,4 +72,4 @@ private:
 }
 }
 
-#endif // PCRE2PP_PRIVATE_TABLE_MAP_H
+#endif // PCRE2XX_PRIVATE_TABLE_MAP_H
