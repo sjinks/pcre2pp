@@ -2,7 +2,6 @@
 #define PCRE2XX_REGEX_CONSTANTS_H
 
 #include <cstdint>
-
 #include "private/pcre2.h"
 
 namespace pcre2 {
@@ -134,7 +133,6 @@ constexpr match_flag_type match_continuous = PCRE2_ANCHORED;
 constexpr match_flag_type format_default   = 0;
 
 }
-
 }
 
 #endif // PCRE2XX_REGEX_CONSTANTS_H

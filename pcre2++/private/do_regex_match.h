@@ -4,6 +4,7 @@
 #include "basic_regex.h"
 #include "regex_error.h"
 #include "private/regex_private.h"
+#include "private/wrappers.h"
 
 namespace pcre2 {
 namespace details {
@@ -44,8 +45,7 @@ inline std::pair<int, std::size_t*> do_regex_search(BiIter s, BiIter e, const ba
             return std::make_pair(0, nullptr);
         }
 
-        std::string error = details::code2error<CharT>(res);
-        throw regex_error(res, error);
+        details::throw_regex_error<CharT>(res);
     }
 
     std::size_t* ovector = details::get_ovector_pointer(md.get());

@@ -7,6 +7,7 @@
 
 #include "private/code.h"
 #include "private/pcre2.h"
+#include "private/wrappers.h"
 
 namespace pcre2 {
 namespace details {
@@ -79,36 +80,6 @@ inline match_data<char32_t>::~match_data()
         pcre2_match_data_free_32(this->m32);
     }
 }
-
-//template<>
-//inline void match_data<char>::create_from_pattern(const code<char>& c)
-//{
-//    assert(!this->m8);
-//    this->m8 = match_data_create_from_pattern(c.get());
-//    if (!this->m8) {
-//        throw std::bad_alloc();
-//    }
-//}
-//
-//template<>
-//inline void match_data<char16_t>::create_from_pattern(const code<char16_t>& c)
-//{
-//    assert(!this->m16);
-//    this->m16 = match_data_create_from_pattern(c.get());
-//    if (!this->m16) {
-//        throw std::bad_alloc();
-//    }
-//}
-//
-//template<>
-//inline void match_data<char32_t>::create_from_pattern(const code<char32_t>& c)
-//{
-//    assert(!this->m32);
-//    this->m32 = match_data_create_from_pattern(c.get());
-//    if (!this->m32) {
-//        throw std::bad_alloc();
-//    }
-//}
 
 template<>
 inline std::uint32_t match_data<char>::mark_count() const

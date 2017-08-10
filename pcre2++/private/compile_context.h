@@ -4,6 +4,7 @@
 #include <new>
 
 #include "private/pcre2.h"
+#include "private/wrappers.h"
 
 namespace pcre2 {
 namespace details {

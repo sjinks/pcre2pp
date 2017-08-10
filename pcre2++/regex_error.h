@@ -4,13 +4,15 @@
 #include <stdexcept>
 #include <string>
 
-#include "private/pcre2.h"
 #include "regex_constants.h"
 
 namespace pcre2 {
 
 namespace details {
-template<typename T> union code;
+
+template<typename CharT>
+[[noreturn]] inline void throw_regex_error(int code);
+
 }
 
 class regex_error : public std::runtime_error {
@@ -39,7 +41,7 @@ public:
     }
 
     template<typename T>
-    friend union details::code;
+    friend void throw_regex_error(int);
 };
 
 }

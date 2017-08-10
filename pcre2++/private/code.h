@@ -1,10 +1,10 @@
 #ifndef PCRE2XX_PRIVATE_CODE_H
 #define PCRE2XX_PRIVATE_CODE_H
 
-#include "private/compile_context.h"
 #include "private/pcre2.h"
+#include "private/compile_context.h"
+#include "private/wrappers.h"
 #include "regex_constants.h"
-#include "regex_error.h"
 
 namespace pcre2 {
 namespace details {
@@ -31,8 +31,7 @@ union code {
             return;
         }
 
-        std::string error = code2error<CharT>(error_code);
-        throw regex_error(error_code, error);
+        throw_regex_error<CharT>(error_code);
     }
 
     template<typename C = CharT, typename std::enable_if<sizeof(C) == 1>::type* = nullptr>

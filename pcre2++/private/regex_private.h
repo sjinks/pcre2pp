@@ -1,11 +1,12 @@
 #ifndef PCRE2XX_PRIVATE_REGEX_PRIVATE_H
 #define PCRE2XX_PRIVATE_REGEX_PRIVATE_H
 
+#include "private/pcre2.h"
 #include "private/code.h"
 #include "private/compile_context.h"
 #include "private/match_data.h"
-#include "private/pcre2.h"
 #include "private/table_map.h"
+#include "private/wrappers.h"
 
 namespace pcre2 {
 namespace details {
