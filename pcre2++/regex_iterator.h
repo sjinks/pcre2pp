@@ -73,25 +73,34 @@ public:
         if (this->m_match[0].matched) {
             auto start     = this->m_match[0].second;
             auto pfx_start = this->m_match[0].second;
-            auto flags     = this->m_f;
 
             if (this->m_match[0].first == this->m_match[0].second) {
                 if (start == this->m_end) {
                     this->m_match = value_type();
                     return *this;
                 }
-                else {
-                    flags |= regex_constants::match_not_null | regex_constants::match_continuous;
-                    if (regex_search(start, this->m_end, this->m_match, *this->m_re, flags)) {
-                        assert(this->m_match.ready());
-                        auto& prefix   = this->m_match.get_prefix();
-                        prefix.first   = pfx_start;
-                        prefix.matched = prefix.first != prefix.second;
-                        this->m_match.m_begin = this->m_begin;
-                        return *this;
+
+                auto flags = this->m_f | regex_constants::match_not_null | regex_constants::match_continuous;
+                if (regex_search(start, this->m_end, this->m_match, *this->m_re, flags)) {
+                    assert(this->m_match.ready());
+                    auto& prefix   = this->m_match.get_prefix();
+                    prefix.first   = pfx_start;
+                    prefix.matched = prefix.first != prefix.second;
+                    this->m_match.m_begin = this->m_begin;
+                    return *this;
+                }
+
+                ++start;
+                if (this->m_re->isUtf()) {
+                    if (1 == sizeof(typename std::iterator_traits<BiIter>::value_type)) {
+                        while (start != this->m_end && (*start & 0xC0u) == 0x80u) {
+                            ++start;
+                        }
                     }
-                    else {
-                        ++start;
+                    else if (2 == sizeof(typename std::iterator_traits<BiIter>::value_type)) {
+                        if (start != this->m_end && (*start & 0xDC00u) == 0xDC00u) {
+                            ++start;
+                        }
                     }
                 }
             }
