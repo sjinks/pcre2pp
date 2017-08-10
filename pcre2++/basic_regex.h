@@ -179,6 +179,12 @@ public:
         std::swap(this->d_ptr, other.d_ptr);
     }
 
+    /* Extensions */
+    bool isUtf() const
+    {
+        return this->d_ptr->isUtf();
+    }
+
 private:
     flag_type m_flags;
     locale_type m_loc;

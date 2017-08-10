@@ -21,7 +21,7 @@ public:
     using locale_type = typename traits_type::locale_type;
 
     regex_private(const value_type* s, std::size_t len, locale_type loc, flag_type f)
-        : m_re(string_type(s, len)), m_loc(loc), m_flags(f), m_ctx(), m_code()
+        : m_re(string_type(s, len)), m_loc(loc), m_flags(f), m_real_flags(), m_ctx(), m_code()
     {
         if (f & pcre2::regex_constants::collate) {
             this->m_ctx.create();
@@ -39,6 +39,7 @@ public:
 
         this->m_code.compile(s, len, f, this->m_ctx);
         this->m_mdata.create_from_pattern(this->m_code);
+        this->m_real_flags = pattern_info_alloptions(this->m_code.get());
     }
 
     unsigned int mark_count() const
@@ -61,10 +62,16 @@ public:
         return this->m_re;
     }
 
+    bool isUtf() const
+    {
+        return this->m_real_flags & PCRE2_UTF;
+    }
+
 private:
     string_type m_re;
     locale_type m_loc;
     flag_type m_flags;
+    std::uint32_t m_real_flags;
     compile_context<value_type> m_ctx;
     code<value_type> m_code;
     match_data<value_type> m_mdata;
