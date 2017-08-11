@@ -197,7 +197,7 @@ static inline std::size_t* get_ovector_pointer(pcre2_match_data_32* md)
     return pcre2_get_ovector_pointer_32(md);
 }
 
-static inline std::uint32_t pattern_info_alloptions(const pcre2_code_8* c)
+/* @suppress("No return") */ static inline std::uint32_t pattern_info_alloptions(const pcre2_code_8* c)
 {
     uint32_t res;
     int rc = pcre2_pattern_info_8(c, PCRE2_INFO_ALLOPTIONS, &res);
@@ -208,7 +208,7 @@ static inline std::uint32_t pattern_info_alloptions(const pcre2_code_8* c)
     throw_regex_error<char>(rc);
 }
 
-static inline std::uint32_t pattern_info_alloptions(const pcre2_code_16* c)
+/* @suppress("No return") */ static inline std::uint32_t pattern_info_alloptions(const pcre2_code_16* c)
 {
     uint32_t res;
     int rc = pcre2_pattern_info_16(c, PCRE2_INFO_ALLOPTIONS, &res);
@@ -219,7 +219,7 @@ static inline std::uint32_t pattern_info_alloptions(const pcre2_code_16* c)
     throw_regex_error<char16_t>(rc);
 }
 
-static inline std::uint32_t pattern_info_alloptions(const pcre2_code_32* c)
+/* @suppress("No return") */ static inline std::uint32_t pattern_info_alloptions(const pcre2_code_32* c)
 {
     uint32_t res;
     int rc = pcre2_pattern_info_32(c, PCRE2_INFO_ALLOPTIONS, &res);
