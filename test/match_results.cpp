@@ -97,7 +97,7 @@ TEST(MatchResults, format_default)
 
     {
         std::string s = "IP: 127.0.0.1 localhost";
-        pcre2::regex re("([0-9]++)\\.([0-9]++)\\.([0-9]++)\\.([0-9]++)");
+        pcre2::regex re("([0-9]++)\\.([0-9]++)\\.([0-9]++)\\.([0-9]++)(:?)");
         pcre2::smatch m;
         std::string actual;
         bool f = pcre2::regex_search(s, m, re);
@@ -119,7 +119,7 @@ TEST(MatchResults, format_default)
         actual = m.format("$00");
         EXPECT_EQ(std::string("127.0.0.1"), actual);
 
-        actual = m.format("$x $$ $1 $5 $4 $");
-        EXPECT_EQ(std::string("$x $ 127  1 $"), actual);
+        actual = m.format("$x $$ $1 $5 $6 $4 $");
+        EXPECT_EQ(std::string("$x $ 127   1 $"), actual);
     }
 }
