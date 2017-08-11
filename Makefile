@@ -21,7 +21,8 @@ TESTER_CXX_SOURCES  = \
 	test/regex_error.cpp \
 	test/regex_search.cpp \
 	test/regex_iterator.cpp \
-	test/errors.cpp
+	test/errors.cpp \
+	test/regex_token_iterator.cpp
 
 TESTER_GCH = .build/test/precompiled.h.gch
 TESTER_PCH = test/precompiled.h
