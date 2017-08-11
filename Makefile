@@ -116,6 +116,6 @@ coverage: clean-coverage
 	-$(TESTER)
 	lcov -q -d .build -c -b . -o .tracefile
 	lcov -q -r .tracefile "/usr/include/*" -o .tracefile
-	genhtml -q --legend -o coverage .tracefile
+	genhtml -q --legend --demangle-cpp --function-coverage --branch-coverage -o coverage .tracefile
 
 .PHONY: build_directory output_directory clean coverage clean-coverage clean-pch

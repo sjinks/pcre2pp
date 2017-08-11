@@ -131,7 +131,7 @@ public:
     template<typename OutIter, typename ST, typename SA>
     OutIter format(OutIter out, const std::basic_string<char_type, ST, SA>& fmt, match_flag_type f = regex_constants::format_default) const
     {
-        return this->format(out, fmt.begin(), fmt.data() + fmt.size(), f);
+        return this->format(out, fmt.data(), fmt.data() + fmt.size(), f);
     }
 
     template<typename ST, typename SA>

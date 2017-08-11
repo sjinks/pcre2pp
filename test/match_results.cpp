@@ -119,7 +119,7 @@ TEST(MatchResults, format_default)
         actual = m.format("$00");
         EXPECT_EQ(std::string("127.0.0.1"), actual);
 
-        actual = m.format("$x $$ $1 $5 $6 $4 $");
+        actual = m.format(std::string("$x $$ $1 $5 $6 $4 $"));
         EXPECT_EQ(std::string("$x $ 127   1 $"), actual);
     }
 }
