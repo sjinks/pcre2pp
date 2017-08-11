@@ -183,6 +183,12 @@ private:
         return base_type::operator[](base_type::size() - 1);
     }
 
+    template<typename OutIter>
+    OutIter format_sed(OutIter out, const char_type* fmt_first, const char_type* fmt_last) const;
+
+    template<typename OutIter>
+    OutIter format_default(OutIter out, const char_type* fmt_first, const char_type* fmt_last) const;
+
     template<typename BiIter2, typename Alloc2>
     friend match_results<BiIter2, Alloc2> pcre2::details::ovector_to_match(const std::pair<int, std::size_t*>& ov, BiIter2 s, BiIter2 e);
 
@@ -198,5 +204,7 @@ using c32match = match_results<const char32_t*>;
 using s32match = match_results<std::u32string::const_iterator>;
 
 }
+
+#include "private/format.tcc"
 
 #endif // PCRE2XX_MATCH_RESULTS_H

@@ -9,9 +9,9 @@ namespace pcre2 {
 namespace regex_constants {
 
 enum syntax_option_type : std::uint64_t {};
+enum match_flag_type    : std::uint64_t {};
 
-using error_type         = int;
-using match_flag_type    = std::uint64_t;
+using error_type = int;
 
 constexpr syntax_option_type pcre2      = static_cast<syntax_option_type>(0);
 constexpr syntax_option_type icase      = static_cast<syntax_option_type>(PCRE2_CASELESS);
@@ -120,17 +120,53 @@ constexpr error_type error_too_many_replace     = PCRE2_ERROR_TOOMANYREPLACE;
 constexpr error_type error_bad_serialized_data  = PCRE2_ERROR_BADSERIALIZEDDATA;
 
 
-constexpr match_flag_type match_default    = 0;
-constexpr match_flag_type match_not_bol    = PCRE2_NOTBOL;    // This option specifies that first character of the subject string is not the beginning of a line, so the circumflex metacharacter should not match before it. Setting this without having set PCRE2_MULTILINE at compile time causes circumflex never to match. This option affects only the behaviour of the circumflex metacharacter. It does not affect \A.
-constexpr match_flag_type match_not_eol    = PCRE2_NOTEOL;    // This option specifies that the end of the subject string is not the end of a line, so the dollar metacharacter should not match it nor (except in multiline mode) a newline immediately before it. Setting this without having set PCRE2_MULTILINE at compile time causes dollar never to match. This option affects only the behaviour of the dollar metacharacter. It does not affect \Z or \z.
-//constexpr match_flag_type match_not_bow    = 0;     // NOT IMPLEMENTED
-//constexpr match_flag_type match_not_eow    = 0;     // NOT IMPLEMENTED
-constexpr match_flag_type match_any        = 0;
-constexpr match_flag_type match_not_null   = PCRE2_NOTEMPTY;  // An empty string is not considered to be a valid match if this option is set. If there are alternatives in the pattern, they are tried. If all the alternatives match the empty string, the entire match fails.
-constexpr match_flag_type match_continuous = PCRE2_ANCHORED;
-//constexpr match_flag_type match_prev_avail = 0      // NOT IMPLEMENTED
+constexpr match_flag_type match_default     = static_cast<match_flag_type>(0);
+constexpr match_flag_type match_not_bol     = static_cast<match_flag_type>(PCRE2_NOTBOL);
+constexpr match_flag_type match_not_eol     = static_cast<match_flag_type>(PCRE2_NOTEOL);
+constexpr match_flag_type match_any         = static_cast<match_flag_type>(0);
+constexpr match_flag_type match_not_null    = static_cast<match_flag_type>(PCRE2_NOTEMPTY);
+constexpr match_flag_type match_continuous  = static_cast<match_flag_type>(PCRE2_ANCHORED);
 
-constexpr match_flag_type format_default   = 0;
+constexpr match_flag_type format_default    = static_cast<match_flag_type>(0);
+constexpr match_flag_type format_pcre       = static_cast<match_flag_type>(UINT64_C(0x0000000100000000));
+constexpr match_flag_type format_sed        = static_cast<match_flag_type>(UINT64_C(0x0000000200000000));
+constexpr match_flag_type format_no_copy    = static_cast<match_flag_type>(UINT64_C(0x0000000400000000));
+constexpr match_flag_type format_first_only = static_cast<match_flag_type>(UINT64_C(0x0000000800000000));
+
+constexpr inline match_flag_type operator&(match_flag_type a, match_flag_type b)
+{
+    return static_cast<match_flag_type>(static_cast<std::uint64_t>(a) & static_cast<std::uint64_t>(b));
+}
+
+constexpr inline match_flag_type operator|(match_flag_type a, match_flag_type b)
+{
+    return static_cast<match_flag_type>(static_cast<std::uint64_t>(a) | static_cast<std::uint64_t>(b));
+}
+
+constexpr inline match_flag_type operator^(match_flag_type a, match_flag_type b)
+{
+    return static_cast<match_flag_type>(static_cast<std::uint64_t>(a) ^ static_cast<std::uint64_t>(b));
+}
+
+constexpr inline match_flag_type operator~(match_flag_type a)
+{
+    return static_cast<match_flag_type>(~static_cast<std::uint64_t>(a));
+}
+
+inline match_flag_type& operator&=(match_flag_type& a, match_flag_type b)
+{
+    return a = a & b;
+}
+
+inline match_flag_type& operator|=(match_flag_type& a, match_flag_type b)
+{
+    return a = a | b;
+}
+
+inline match_flag_type& operator^=(match_flag_type& a, match_flag_type b)
+{
+    return a = a ^ b;
+}
 
 }
 }
