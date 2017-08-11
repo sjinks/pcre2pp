@@ -96,30 +96,35 @@ TEST(MatchResults, format_default)
     }
 
     {
-        std::string s = "IP: 127.0.0.1 localhost";
-        pcre2::regex re("([0-9]++)\\.([0-9]++)\\.([0-9]++)\\.([0-9]++)(:?)");
+        std::string s = "IP: 127.0.0.1 localhost local";
+        pcre2::regex re("([0-9]++)\\.([0-9]++)\\.([0-9]++)\\.([0-9]++)(:)? (\\w+)");
         pcre2::smatch m;
         std::string actual;
         bool f = pcre2::regex_search(s, m, re);
 
         EXPECT_TRUE(f);
+        EXPECT_TRUE(m[1].matched);
+        EXPECT_TRUE(m[2].matched);
+        EXPECT_TRUE(m[3].matched);
+        EXPECT_TRUE(m[4].matched);
+        EXPECT_FALSE(m[5].matched);
 
         actual = m.format("$`");
         EXPECT_EQ(std::string("IP: "), actual);
 
         actual = m.format("$'");
-        EXPECT_EQ(std::string(" localhost"), actual);
+        EXPECT_EQ(std::string(" local"), actual);
 
         actual = m.format("$&");
-        EXPECT_EQ(std::string("127.0.0.1"), actual);
+        EXPECT_EQ(std::string("127.0.0.1 localhost"), actual);
 
         actual = m.format("$0");
-        EXPECT_EQ(std::string("127.0.0.1"), actual);
+        EXPECT_EQ(std::string("127.0.0.1 localhost"), actual);
 
         actual = m.format("$00");
-        EXPECT_EQ(std::string("127.0.0.1"), actual);
+        EXPECT_EQ(std::string("127.0.0.1 localhost"), actual);
 
-        actual = m.format(std::string("$x $$ $1 $5 $6 $4 $"));
+        actual = m.format(std::string("$x $$ $1 $5 $7 $4 $"));
         EXPECT_EQ(std::string("$x $ 127   1 $"), actual);
     }
 }
