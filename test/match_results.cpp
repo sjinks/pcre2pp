@@ -79,6 +79,23 @@ TEST(MatchResults, format_default)
     }
 
     {
+        std::string s = "867-5309 is the phone to call";
+        pcre2::regex phone_regex("\\d{3}-\\d{4}");
+        pcre2::smatch phone_match;
+        bool f = pcre2::regex_search(s, phone_match, phone_regex);
+
+        EXPECT_TRUE(f);
+
+        std::string actual = phone_match.format(
+            "<$`>"    // $` means characters before the match
+            "[$&]"    // $& means the matched characters
+            "<$'>"    // $' means characters following the match
+        );
+
+        EXPECT_EQ(std::string("<>[867-5309]< is the phone to call>"), actual);
+    }
+
+    {
         std::string s = "IP: 127.0.0.1 localhost";
         pcre2::regex re("([0-9]++)\\.([0-9]++)\\.([0-9]++)\\.([0-9]++)");
         pcre2::smatch m;
