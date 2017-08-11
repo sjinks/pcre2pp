@@ -8,6 +8,7 @@
 #include "regex_iterator.h"
 #include "regex_match.h"
 #include "regex_search.h"
+#include "regex_token_iterator.h"
 #include "sub_match.h"
 
 #endif // PCRE2XX_REGEX_H
