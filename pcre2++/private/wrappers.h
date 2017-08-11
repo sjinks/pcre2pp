@@ -11,6 +11,21 @@
 namespace pcre2 {
 namespace details {
 
+static inline void code_free(pcre2_code_8* c)
+{
+    pcre2_code_free_8(c);
+}
+
+static inline void code_free(pcre2_code_16* c)
+{
+    pcre2_code_free_16(c);
+}
+
+static inline void code_free(pcre2_code_32* c)
+{
+    pcre2_code_free_32(c);
+}
+
 static inline void compile_context_free(pcre2_compile_context_8* ctx)
 {
     pcre2_compile_context_free_8(ctx);

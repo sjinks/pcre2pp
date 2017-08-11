@@ -16,7 +16,10 @@ union code {
     {
     }
 
-    ~code();
+    ~code()
+    {
+        code_free(this->get<CharT>());
+    }
 
     void compile(const CharT* re, std::size_t len, pcre2::regex_constants::syntax_option_type f, const compile_context<CharT>& ctx)
     {
@@ -57,30 +60,6 @@ private:
     pcre2_code_16* c16;
     pcre2_code_32* c32;
 };
-
-template<>
-inline code<char>::~code()
-{
-    if (this->c8) {
-        pcre2_code_free_8(this->c8);
-    }
-}
-
-template<>
-inline code<char16_t>::~code()
-{
-    if (this->c16) {
-        pcre2_code_free_16(this->c16);
-    }
-}
-
-template<>
-inline code<char32_t>::~code()
-{
-    if (this->c32) {
-        pcre2_code_free_32(this->c32);
-    }
-}
 
 }
 }
