@@ -11,14 +11,13 @@
 namespace pcre2 {
 namespace details {
 
-template<typename Traits>
+template<typename CharT>
 class regex_private {
 public:
-    using traits_type = Traits;
-    using value_type  = typename traits_type::char_type;
-    using string_type = typename traits_type::string_type;
+    using value_type  = CharT;
+    using string_type = std::basic_string<CharT>;
     using flag_type   = regex_constants::syntax_option_type;
-    using locale_type = typename traits_type::locale_type;
+    using locale_type = std::locale;
 
     regex_private(const value_type* s, std::size_t len, locale_type loc, flag_type f)
         : m_re(string_type(s, len)), m_loc(loc), m_flags(f), m_real_flags(), m_ctx(), m_code()

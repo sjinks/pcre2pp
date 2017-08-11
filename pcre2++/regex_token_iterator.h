@@ -3,7 +3,6 @@
 
 #include <initializer_list>
 #include <iterator>
-#include <regex>
 #include <vector>
 #include "basic_regex.h"
 #include "regex_iterator.h"
@@ -11,10 +10,10 @@
 
 namespace pcre2 {
 
-template<typename BiIter, typename CharT = typename std::iterator_traits<BiIter>::value_type, typename RxTraits = std::regex_traits<CharT> >
+template<typename BiIter, typename CharT = typename std::iterator_traits<BiIter>::value_type>
 class regex_token_iterator {
 public:
-    using regex_type        = basic_regex<CharT, RxTraits>;
+    using regex_type        = basic_regex<CharT>;
     using value_type        = sub_match<BiIter>;
     using iterator_category = std::forward_iterator_tag;
     using difference_type   = std::ptrdiff_t;
@@ -150,7 +149,7 @@ public:
     }
 
 private:
-    using position = regex_iterator<BiIter, CharT, RxTraits>;
+    using position = regex_iterator<BiIter, CharT>;
 
     position m_pos;
     std::vector<int> m_subs;

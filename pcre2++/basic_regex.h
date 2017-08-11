@@ -4,7 +4,6 @@
 #include <initializer_list>
 #include <locale>
 #include <memory>
-#include <regex>
 #include <string>
 #include <type_traits>
 
@@ -13,27 +12,24 @@
 
 namespace pcre2 {
 
-template<typename CharT, typename Traits>
+template<typename CharT>
 class basic_regex;
 
 namespace details {
-template<typename BiIt, typename C, typename RT>
-inline std::pair<int, std::size_t*> do_regex_match(BiIt, BiIt, const pcre2::basic_regex<C, RT>&, std::uint32_t);
+template<typename BiIt, typename C>
+inline std::pair<int, std::size_t*> do_regex_match(BiIt, BiIt, const pcre2::basic_regex<C>&, std::uint32_t);
 
-template<typename BiIt, typename C, typename RT>
-inline std::pair<int, std::size_t*> do_regex_search(BiIt, BiIt, const pcre2::basic_regex<C, RT>&, std::uint32_t);
+template<typename BiIt, typename C>
+inline std::pair<int, std::size_t*> do_regex_search(BiIt, BiIt, const pcre2::basic_regex<C>&, std::uint32_t);
 }
 
-template<typename CharT, typename Traits = std::regex_traits<CharT> >
+template<typename CharT>
 class basic_regex {
 public:
-    static_assert(std::is_same<CharT, typename Traits::char_type>::value, "regex and regex_traits must have the same character type");
-
     using value_type  = CharT;
-    using traits_type = Traits;
-    using string_type = typename traits_type::string_type;
+    using string_type = std::basic_string<CharT>;
     using flag_type   = regex_constants::syntax_option_type;
-    using locale_type = typename traits_type::locale_type;
+    using locale_type = std::locale;
 
     /* Constructors */
     basic_regex()
@@ -188,18 +184,18 @@ public:
 private:
     flag_type m_flags;
     locale_type m_loc;
-    std::unique_ptr<details::regex_private<traits_type> > d_ptr;
+    std::unique_ptr<details::regex_private<value_type> > d_ptr;
 
     basic_regex(const value_type* s, std::size_t len, locale_type loc, flag_type f)
-        : m_flags(f), m_loc(loc), d_ptr(new details::regex_private<traits_type>(s, len, loc, f))
+        : m_flags(f), m_loc(loc), d_ptr(new details::regex_private<value_type>(s, len, loc, f))
     {
     }
 
-    template<typename BiIt, typename C, typename RT>
-    friend std::pair<int, std::size_t*> pcre2::details::do_regex_match(BiIt s, BiIt e, const basic_regex<C, RT>& re, std::uint32_t flags);
+    template<typename BiIt, typename C>
+    friend std::pair<int, std::size_t*> pcre2::details::do_regex_match(BiIt s, BiIt e, const basic_regex<C>& re, std::uint32_t flags);
 
-    template<typename BiIt, typename C, typename RT>
-    friend std::pair<int, std::size_t*> pcre2::details::do_regex_search(BiIt s, BiIt e, const basic_regex<C, RT>& re, std::uint32_t flags);
+    template<typename BiIt, typename C>
+    friend std::pair<int, std::size_t*> pcre2::details::do_regex_search(BiIt s, BiIt e, const basic_regex<C>& re, std::uint32_t flags);
 };
 
 using regex   = basic_regex<char>;
@@ -207,7 +203,7 @@ using regex16 = basic_regex<char16_t>; // FIXME: verify sizeof(char16_t) == 2
 using regex32 = basic_regex<char32_t>; // FIXME: verify sizeof(char32_t) == 4
 
 template<typename CharT, typename Traits>
-inline void swap(basic_regex<CharT, Traits>& lhs, basic_regex<CharT, Traits>& rhs)
+inline void swap(basic_regex<CharT>& lhs, basic_regex<CharT>& rhs)
 {
     lhs.swap(rhs);
 }

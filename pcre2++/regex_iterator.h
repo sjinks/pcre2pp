@@ -3,7 +3,6 @@
 
 #include <cstddef>
 #include <iterator>
-#include <regex>
 #include <string>
 
 #include "regex_constants.h"
@@ -11,10 +10,10 @@
 
 namespace pcre2 {
 
-template<typename BiIter, typename CharT = typename std::iterator_traits<BiIter>::value_type, typename ReTraits = std::regex_traits<CharT> >
+template<typename BiIter, typename CharT = typename std::iterator_traits<BiIter>::value_type>
 class regex_iterator {
 public:
-    using regex_type        = basic_regex<CharT, ReTraits>;
+    using regex_type        = basic_regex<CharT>;
     using value_type        = match_results<BiIter>;
     using difference_type   = std::ptrdiff_t;
     using pointer           = const value_type*;

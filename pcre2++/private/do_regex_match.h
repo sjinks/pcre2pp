@@ -9,8 +9,8 @@
 namespace pcre2 {
 namespace details {
 
-template<typename BiIter, typename CharT, typename Traits>
-inline std::pair<int, std::size_t*> do_regex_match(BiIter s, BiIter e, const basic_regex<CharT, Traits>& re, std::uint32_t flags)
+template<typename BiIter, typename CharT>
+inline std::pair<int, std::size_t*> do_regex_match(BiIter s, BiIter e, const basic_regex<CharT>& re, std::uint32_t flags)
 {
     static const CharT rh[] = { CharT('\\'), CharT('A'), CharT('('), CharT('?'), CharT(':'), CharT('\0') };
     static const CharT rt[] = { CharT(')'), CharT('\\'), CharT('z'), CharT('\0') };
@@ -19,23 +19,23 @@ inline std::pair<int, std::size_t*> do_regex_match(BiIter s, BiIter e, const bas
         return std::make_pair(0, nullptr);
     }
 
-    typename Traits::string_type regex = rh + re.d_ptr->regex() + rt;
+    typename basic_regex<CharT>::string_type regex = rh + re.d_ptr->regex() + rt;
 
-    basic_regex<CharT, Traits> full;
+    basic_regex<CharT> full;
     full.imbue(re.getloc());
     full.assign(regex, re.flags());
 
     return do_regex_search(s, e, full, flags);
 }
 
-template<typename BiIter, typename CharT, typename Traits>
-inline std::pair<int, std::size_t*> do_regex_search(BiIter s, BiIter e, const basic_regex<CharT, Traits>& re, std::uint32_t flags)
+template<typename BiIter, typename CharT>
+inline std::pair<int, std::size_t*> do_regex_search(BiIter s, BiIter e, const basic_regex<CharT>& re, std::uint32_t flags)
 {
     if (!re.d_ptr) {
         return std::make_pair(0, nullptr);
     }
 
-    regex_private<Traits>* rp        = re.d_ptr.get();
+    regex_private<CharT>* rp         = re.d_ptr.get();
     match_data<CharT>& md            = rp->get_match_data();
     const details::code<CharT>& code = rp->get_code();
 

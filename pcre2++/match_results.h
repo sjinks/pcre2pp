@@ -186,7 +186,7 @@ private:
     template<typename BiIter2, typename Alloc2>
     friend match_results<BiIter2, Alloc2> pcre2::details::ovector_to_match(const std::pair<int, std::size_t*>& ov, BiIter2 s, BiIter2 e);
 
-    template<typename, typename, typename>
+    template<typename, typename>
     friend class regex_iterator;
 };
 
