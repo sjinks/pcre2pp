@@ -31,6 +31,15 @@ public:
     using flag_type   = regex_constants::syntax_option_type;
     using locale_type = std::locale;
 
+    static constexpr flag_type pcre2      = regex_constants::pcre2;
+    static constexpr flag_type icase      = regex_constants::icase;
+    static constexpr flag_type nosubs     = regex_constants::nosubs;
+    static constexpr flag_type optimize   = regex_constants::optimize;
+    static constexpr flag_type collate    = regex_constants::collate;
+    static constexpr flag_type multiline  = regex_constants::multiline;
+    static constexpr flag_type utf        = regex_constants::utf;
+    static constexpr flag_type ucp        = regex_constants::ucp;
+
     /* Constructors */
     basic_regex()
         : m_flags(regex_constants::pcre2), m_loc(), d_ptr(nullptr)
