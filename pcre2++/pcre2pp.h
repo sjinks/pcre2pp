@@ -7,6 +7,7 @@
 #include "regex_error.h"
 #include "regex_iterator.h"
 #include "regex_match.h"
+#include "regex_replace.h"
 #include "regex_search.h"
 #include "regex_token_iterator.h"
 #include "sub_match.h"
