@@ -113,6 +113,21 @@ static inline pcre2_code_32* compile(char32_t* re, std::size_t len, std::uint32_
     );
 }
 
+static inline int jit_compile(pcre2_code_8* code, std::uint32_t flags)
+{
+    return pcre2_jit_compile_8(code, flags);
+}
+
+static inline int jit_compile(pcre2_code_16* code, std::uint32_t flags)
+{
+    return pcre2_jit_compile_16(code, flags);
+}
+
+static inline int jit_compile(pcre2_code_32* code, std::uint32_t flags)
+{
+    return pcre2_jit_compile_32(code, flags);
+}
+
 static inline std::string get_error_message(int code, char* buf, std::size_t len)
 {
     int l = pcre2_get_error_message_8(code, reinterpret_cast<PCRE2_UCHAR8*>(buf), len);

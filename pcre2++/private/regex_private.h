@@ -37,6 +37,11 @@ public:
         }
 
         this->m_code.compile(s, len, f, this->m_ctx);
+
+        if (f & pcre2::regex_constants::optimize) {
+            jit_compile(this->m_code.get(), PCRE2_JIT_COMPLETE);
+        }
+
         this->m_mdata.create_from_pattern(this->m_code);
         this->m_real_flags = pattern_info_alloptions(this->m_code.get());
     }
